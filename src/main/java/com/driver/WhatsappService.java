@@ -23,11 +23,11 @@ public class WhatsappService {
         return Wp.createMsg(content);
     }
 
-    public int sendMessage(Message message, User sender, Group group){
+    public int sendMessage(Message message, User sender, Group group) throws Exception{
         return Wp.Sendmsg(message,sender,group);
     }
 
-    public String changeAdmin(User approver, User user, Group group){
+    public String changeAdmin(User approver, User user, Group group) throws Exception{
        return Wp.changeAdmin(approver,user,group);
     }
 }

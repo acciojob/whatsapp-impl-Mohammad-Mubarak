@@ -47,7 +47,6 @@ public class WhatsappRepository {
 
   public Group  createGroups(List<User> users){
         int count=-1;
-
         User adminname= users.get(0);
 
 
@@ -70,34 +69,35 @@ public class WhatsappRepository {
   public int createMsg(String content){
       messageId++;
       msgContent.put(messageId,content); // putting msg id with content;
-      Message msg=new Message(messageId,content,new Date());
+      Date d1 = new Date();
+      Message msg=new Message(messageId,content,d1);
       return messageId;
   }
 
-  public int Sendmsg(Message message, User sender, Group group){
+  public int Sendmsg(Message message, User sender, Group group) throws Exception{
         if(!groupUserMap.containsKey(group.getName())){
-            throw new IllegalArgumentException("Group does not exist");
+            throw new Exception("Group does not exist");
         }
         String curname=sender.getName();
         List groupname=groupUserMap.get(group.getName());
 
         if(!groupname.contains(curname)){
-            throw new IllegalArgumentException("You are not allowed to send message");
+            throw new Exception("You are not allowed to send message");
         }
         return messageId;
   }
 
-    //Throw "Approver does not have rights"     if the approver is not the current admin of the group
+    //Throw "Approver does not have rights" if the approver is not the current admin of the group
     //Throw "User is not a participant" if the user is not a part of the group
     //Change the admin of the group to "user" and return "SUCCESS". Note that at one time there is only one admin and the admin rights are transferred from approver to user.
 
-    public  String  changeAdmin(User approver, User user, Group group){
+    public  String  changeAdmin(User approver, User user, Group group) throws Exception{
         if(!groupUserMap.containsKey(group.getName())){
-            throw new IllegalArgumentException("Group does not exist");
+            throw new Exception("Group does not exist");
         }
         User curadmin =adminMap.get(group);
          if (curadmin.getName()!= approver.getName()){
-             throw new IllegalArgumentException("User is not a participant");
+             throw new Exception("User is not a participant");
          }else{
              adminMap.put(group,user);
              return "SUCCESS";

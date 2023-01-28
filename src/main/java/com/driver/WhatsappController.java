@@ -15,7 +15,7 @@ public class WhatsappController {
     WhatsappService whatsappService = new WhatsappService();
 
     @PostMapping("/add-user")
-    public String createUser(@RequestBody  String name,@RequestBody String mobile) throws Exception {
+    public String createUser(String name,String mobile) throws Exception {
         //If the mobile number exists in database, throw "User already exists" exception
         //Otherwise, create the user and return "SUCCESS"
         return whatsappService.createUser(name, mobile);
@@ -23,7 +23,7 @@ public class WhatsappController {
 
 
     @PostMapping("/add-group")
-    public Group createGroup(@RequestBody List<User> users){
+    public Group createGroup( List<User> users){
         // The list contains at least 2 users where the first user is the admin. A group has exactly one admin.
 
 
@@ -95,6 +95,5 @@ public class WhatsappController {
         //This is a bonus problem and does not contains any marks
         // Find the Kth latest message between start and end (excluding start and end)
         // If the number of messages between given time is less than K, throw "K is greater than the number of messages" exception
-
 
 }
