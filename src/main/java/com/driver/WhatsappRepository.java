@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class WhatsappRepository {
-
     //Assume that each user belongs to at most one group
     //You can use the below mentioned hashmaps or delete these and create your own.
     private HashMap<String,String> Newuser;
@@ -15,15 +14,10 @@ public class WhatsappRepository {
     private HashMap<Group, List<Message>> groupMessageMap;
     private HashMap<Message, User> senderMap;
     private HashMap<Group, User> adminMap;
-
     private HashMap<Integer,String > msgContent;
-
     private HashSet<String> userMobile;
     private int customGroupCount;
     private int messageId;
-
-
-
 
     public WhatsappRepository(){
         this.Newuser = new HashMap<>();
@@ -33,7 +27,7 @@ public class WhatsappRepository {
         this.adminMap = new HashMap<Group, User>();
         this.userMobile = new HashSet<>();
         this.customGroupCount = 0;
-        this.messageId = -1;
+        this.messageId = 0;
         this.msgContent=new HashMap<>();
 
     }
@@ -61,7 +55,7 @@ public class WhatsappRepository {
             }
         }
         count++;
-        Group g=new Group("Group"+count,users.size());
+        Group g=new Group("Group "+count,users.size());
         groupUserMap.put(g,users);
         adminMap.put(g,adminname);
         return g;
@@ -85,11 +79,11 @@ public class WhatsappRepository {
         return messageId;
   }
     public  String  changeAdmin(User approver, User user, Group group) throws Exception{
-        if(!groupUserMap.containsKey(group.getName())){
+        if(!groupUserMap.containsKey(group)){
             throw new Exception("Group does not exist");
         }
-        User curadmin =adminMap.get(group);
-         if (curadmin.getName()!= approver.getName()){
+        String curadmin =adminMap.get(group).getName();
+         if (curadmin != approver.getName()){
              throw new Exception("User is not a participant");
          }else{
              adminMap.put(group,user);
