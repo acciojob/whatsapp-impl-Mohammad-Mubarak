@@ -22,14 +22,7 @@ public class WhatsappRepository {
     private int customGroupCount;
     private int messageId;
 
-    public String createUser(String name,String number){
-        if(userMobile.contains(number)){
-             return  "User already exists";
-        }
-        userMobile.add(number);
-        Newuser.put(name,number);
-        return "SUCCESS";
-    }
+
 
 
     public WhatsappRepository(){
@@ -45,10 +38,18 @@ public class WhatsappRepository {
 
     }
 
+    public String createUser(String name,String number){
+        if(userMobile.contains(number)){
+            return  "User already exists";
+        }
+        userMobile.add(number);
+        Newuser.put(name,number);
+        return "SUCCESS";
+    }
+
   public Group  createGroups(List<User> users){
         int count=-1;
         User adminname= users.get(0);
-
 
       if(!groupUserMap.isEmpty()){
             if(users.size()==2){
@@ -69,8 +70,8 @@ public class WhatsappRepository {
   public int createMsg(String content){
       messageId++;
       msgContent.put(messageId,content); // putting msg id with content;
-      Date d1 = new Date();
-      Message msg=new Message(messageId,content,d1);
+//      Date d1 = new Date();
+//      Message msg=new Message(messageId,content,d1);
       return messageId;
   }
 
@@ -80,17 +81,11 @@ public class WhatsappRepository {
         }
         String curname=sender.getName();
         List groupname=groupUserMap.get(group.getName());
-
         if(!groupname.contains(curname)){
             throw new Exception("You are not allowed to send message");
         }
         return messageId;
   }
-
-    //Throw "Approver does not have rights" if the approver is not the current admin of the group
-    //Throw "User is not a participant" if the user is not a part of the group
-    //Change the admin of the group to "user" and return "SUCCESS". Note that at one time there is only one admin and the admin rights are transferred from approver to user.
-
     public  String  changeAdmin(User approver, User user, Group group) throws Exception{
         if(!groupUserMap.containsKey(group.getName())){
             throw new Exception("Group does not exist");
