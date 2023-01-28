@@ -38,9 +38,9 @@ public class WhatsappRepository {
 
     }
 
-    public String createUser(String name,String number){
+    public String createUser(String name,String number) throws Exception{
         if(userMobile.contains(number)){
-            return  "User already exists";
+         throw new Exception("User already exists");
         }
         userMobile.add(number);
         Newuser.put(name,number);
@@ -70,8 +70,6 @@ public class WhatsappRepository {
   public int createMsg(String content){
       messageId++;
       msgContent.put(messageId,content); // putting msg id with content;
-//      Date d1 = new Date();
-//      Message msg=new Message(messageId,content,d1);
       return messageId;
   }
 
