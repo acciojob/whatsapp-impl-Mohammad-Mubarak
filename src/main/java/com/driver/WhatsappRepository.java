@@ -42,20 +42,18 @@ public class WhatsappRepository {
     }
 
   public Group  createGroups(List<User> users){
-        int count=-1;
         User adminname= users.get(0);
 
-      if(!groupUserMap.isEmpty()){
             if(users.size()==2){
                 User u=users.get(users.size()-1);
                 String gn=u.getName();
                 Group g=new Group(gn,users.size());
                 groupUserMap.put(g,users);
                 adminMap.put(g,adminname);
+                return g;
             }
-        }
-        count++;
-        Group g=new Group("Group "+count,users.size());
+        customGroupCount++;
+        Group g=new Group("Group "+customGroupCount,users.size());
         groupUserMap.put(g,users);
         adminMap.put(g,adminname);
         return g;
@@ -84,18 +82,15 @@ public class WhatsappRepository {
         }
 
      List<User> cu=groupUserMap.get(group);
-        if(!cu.contains(!cu.contains(user))){
+        if(!cu.contains(user)){
             throw  new Exception("User is not a participant");
         }
-
-
         String curadmin =adminMap.get(group).getName();
          if (curadmin != approver.getName()){
              throw new Exception("Approver does not have rights");
-         } else{
+         }
              adminMap.put(group,user);
              return "SUCCESS";
-         }
 
   }
 }
