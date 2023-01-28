@@ -1,14 +1,12 @@
 package com.driver;
-
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Message {
     private int id;
     private String content;
-    private LocalDate timestamp;
+    private Date timestamp;
 
-    public Message(int id, String content, LocalDate timestamp) {
+    public Message(int id, String content, Date timestamp) {
         this.id = id;
         this.content = content;
         this.timestamp = timestamp;
